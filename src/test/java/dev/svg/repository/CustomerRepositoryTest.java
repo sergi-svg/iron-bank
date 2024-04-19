@@ -20,14 +20,15 @@ class CustomerRepositoryTest {
 
     @BeforeAll
     static void setUp() {
-        address = new Address(
-                "Barcelona",
-                "08001",
-                "Gran via c.c",
-                "123"
-        );
+        address = new Address();
+        address.setCity("Barcelona");
+        address.setPostalCode("08001");
+        address.setStreet("Gran via c.c");
+        address.setStreetNumber("123");
 
-        name = new Name("John", "Doe");
+        name = new Name();
+        name.setName("John");
+        name.setSurname("Doe");
     }
 
     @AfterEach
@@ -45,10 +46,10 @@ class CustomerRepositoryTest {
                 null,
                 "doe.john@hotmail.com",
                 "600102030"
-                );
+        );
 
         customerRepository.save(customer);
-        assertNotNull(customerRepository.findAll());
+        assertNotNull(customerRepository.findById(1L));
     }
 
     @Test
