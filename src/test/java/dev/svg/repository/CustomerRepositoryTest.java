@@ -16,7 +16,9 @@ class CustomerRepositoryTest {
     CustomerRepository customerRepository;
 
     static Address address;
+    static Address secondaryAddress;
     static Name name;
+    static Customer customer;
 
     @BeforeAll
     static void setUp() {
@@ -26,9 +28,24 @@ class CustomerRepositoryTest {
         address.setStreet("Gran via c.c");
         address.setStreetNumber("123");
 
+        secondaryAddress = new Address();
+        secondaryAddress.setCity("Tossa de Mar");
+        secondaryAddress.setPostalCode("17320");
+        secondaryAddress.setStreet("Carrer del catell");
+        secondaryAddress.setStreetNumber("10");
+
         name = new Name();
-        name.setName("John");
-        name.setSurname("Doe");
+        name.setName("Jordi");
+        name.setSurname("Culé");
+
+        customer = new Customer(1L,
+                "12345678A",
+                name,
+                address,
+                secondaryAddress,
+                "cule.jordi@hotmail.com",
+                "600102030"
+        );
     }
 
     @AfterEach
@@ -39,15 +56,6 @@ class CustomerRepositoryTest {
     @Test
     @DisplayName("Should create a new user")
     void testCreateNewUser() {
-        Customer customer = new Customer(1L,
-                "12345678A",
-                name,
-                address,
-                null,
-                "doe.john@hotmail.com",
-                "600102030"
-        );
-
         customerRepository.save(customer);
         assertNotNull(customerRepository.findById(1L));
     }
@@ -55,17 +63,15 @@ class CustomerRepositoryTest {
     @Test
     @DisplayName("Should find a user by email")
     void testFindByEmail() {
-        Customer customer = new Customer(1L,
-                "12345678A",
-                name,
-                address,
-                null,
-                "doe.john@hotmail.com",
-                "600102030"
-        );
-
         customerRepository.save(customer);
-        assertNotNull(customerRepository.findByEmail("doe.john@hotmail.com"));
+        assertNotNull(customerRepository.findByEmail("cule.jordi@hotmail.com"));
+    }
+
+    @Test
+    @DisplayName("Should find a user by phone")
+    void testFindByPhone() {
+        customerRepository.save(customer);
+        assertNotNull(customerRepository.findByPhone("600102030"));
     }
 
 }
