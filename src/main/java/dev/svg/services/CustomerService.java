@@ -31,4 +31,16 @@ public class CustomerService {
         return customerRepository.findByPhone(phone);
     }
 
+    public void deleteById(Long id) {
+        customerRepository.deleteById(id);
+    }
+
+    public Customer createCustomer(Customer customer) {
+        return customerRepository.save(customer);
+    }
+
+    public Customer updateCustomer(Customer customer) {
+        return customerRepository.save(customer);
+    }
+
 }

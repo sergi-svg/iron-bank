@@ -2,10 +2,10 @@ package dev.svg.controllers;
 
 import dev.svg.model.Customer;
 import dev.svg.services.CustomerService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -18,30 +18,40 @@ public class CustomerController implements ResourceController <Customer> {
         this.customerService = customerService;
     }
 
-    @GetMapping(path = "/customers/{param}")
-    @ResponseStatus(HttpStatus.OK)
-    public Customer getResourceByParam(@PathVariable String param) {
-        return switch (param.split("=")[0]) {
-            case "idCard" -> customerService.getCustomerByIdCard(param.split("=")[1]);
-            case "email" -> customerService.getCustomerByEmail(param);
-            case "phone" -> customerService.getCustomerByPhone(param);
-            default -> null;
-        };
-    }
-
     @GetMapping("/customers")
     @ResponseStatus(HttpStatus.OK)
     public List<Customer> getAllResources() {
         return customerService.getAllCustomers();
     }
 
-    @Override
-    public Customer updateResource(Customer customer) {
-        return null;
+    @GetMapping(path = "/customer")
+    @ResponseStatus(HttpStatus.OK)
+    public Customer getResourceByParams(@RequestParam HashMap<String, String> params) {
+        Customer customer = null;
+        if (params.containsKey("idCard")) customer = customerService.getCustomerByIdCard(params.get("idCard"));
+        else if (params.containsKey("email")) customer = customerService.getCustomerByEmail(params.get("email"));
+        else if (params.containsKey("phone")) customer = customerService.getCustomerByPhone(params.get("phone"));
+
+        return customer;
     }
 
-    @Override
-    public Customer createResource(Customer customer) {
-        return null;
+    @DeleteMapping("/customers/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteResource(@PathVariable("id") Long id) {
+        customerService.deleteById(id);
     }
+
+    @PostMapping("/customers")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Customer createResource(Customer customer) {
+        return customerService.createCustomer(customer);
+    }
+
+    @PutMapping("/customers")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Customer updateResource(Customer customer) {
+        return customerService.updateCustomer(customer);
+    }
+
+
 }
