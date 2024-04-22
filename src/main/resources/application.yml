@@ -17,3 +17,7 @@ spring:
 
   application:
     name: IronBank
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
