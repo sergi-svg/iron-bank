@@ -18,7 +18,10 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-
+        
+    - name: Build the Docker image
+      run: docker-compose build
+      
     - name: up mysql and apache container runs
       run: docker-compose up -d
         
