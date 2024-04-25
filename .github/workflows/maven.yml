@@ -1,19 +1,23 @@
-name: CI
-on: push
+name: Build
+on: [push]
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: self-hosted
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:latest
         env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: test
+          MYSQL_DATABASE: acme_test
+          MYSQL_ROOT_PASSWORD: secret
         ports:
-            - '8888:3306'
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    steps:
-      - uses: actions/checkout@v1
-      - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS test;'
-      - name: List existing SQL databases
-        run: mysql --user=root --password=password --execute="show databases;"
+          - 33306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:       
+      - name: Verify MySQL connection
+        run: |
+          sudo apt update
