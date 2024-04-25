@@ -10,7 +10,7 @@ jobs:
           MYSQL_DATABASE: acme_test
           MYSQL_ROOT_PASSWORD: secret
         ports:
-          - 33306:3306
+          - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
@@ -21,3 +21,12 @@ jobs:
       - name: Verify MySQL connection
         run: |
           sudo apt update
+      - uses: actions/checkout@v3
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B verify --file pom.xml          
