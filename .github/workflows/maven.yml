@@ -7,7 +7,7 @@ jobs:
       mysql:
         image: mysql:latest
         env:
-          MYSQL_DATABASE: ironhack
+          MYSQL_DATABASE: iron-bank-test
           MYSQL_ROOT_USER: ironhack
           MYSQL_ROOT_PASSWORD: ironhack20124
         ports:
