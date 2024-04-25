@@ -15,10 +15,11 @@ spring:
       data-locations: classpath:data.sql
       mode: always
 
-  application:
-    name: IronBank
-
-springdoc:
+spring-doc:
   swagger-ui:
     path: /swagger-ui-custom.html
     operationsSorter: method
+
+  application:
+    name: IronBank
+
