@@ -23,6 +23,6 @@ jobs:
           mysql user: ironhack
           mysql root password: ironhack2024          
 
-      - run: mysql -h 172.17.0.1 --port 3306 -u ironhack -pironhack2024 -e 'CREATE DATABASE IF NOT EXISTS iron-hack-test;'
+      - run: mysql -h 127.0.0.1 --port 3306 -u ironhack -pironhack2024 -e 'CREATE DATABASE IF NOT EXISTS iron-hack-test;'
       - name: Build with Maven
         run: mvn -B verify --file pom.xml
