@@ -20,6 +20,9 @@ jobs:
           character set server: 'utf8'
           collation server: 'utf8_general_ci'
           mysql version: '8.0'
-
+          mysql user: root
+          mysql root password: 'root'          
+      - name: List existing SQL databases
+        run: mysql --user=root --password=root --execute="show databases;"
       - name: Build with Maven
         run: mvn -B verify --file pom.xml
