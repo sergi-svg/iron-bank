@@ -20,6 +20,7 @@ spring-doc:
     path: /swagger-ui-custom.html
     operationsSorter: method
 
-  application:
-    name: IronBank
-
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
