@@ -5,3 +5,4 @@
 
 ### OPEN-API
 * http://localhost:8080/swagger-ui/index.html
+* https://developer.mozilla.org/en-US/docs/Web/HTTP/Status

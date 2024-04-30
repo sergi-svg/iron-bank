@@ -2,9 +2,12 @@ package dev.svg.services;
 
 import dev.svg.model.Customer;
 import dev.svg.repository.CustomerRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -19,28 +22,39 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer getCustomerByIdCard(String idCard) {
+    public Optional<Customer> getCustomerByIdCard(String idCard) {
         return customerRepository.findByIdCard(idCard);
     }
 
-    public Customer getCustomerByEmail(String email) {
+    public Optional<Customer> getCustomerByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
 
-    public Customer getCustomerByPhone(String phone) {
+    public Optional<Customer> getCustomerByPhone(String phone) {
         return customerRepository.findByPhone(phone);
     }
 
-    public void deleteById(Long id) {
-        customerRepository.deleteById(id);
+    public void deleteByIdCard(String idCard) {
+        Optional<Customer> optionalCustomer = customerRepository.findByIdCard(idCard);
+        if (optionalCustomer.isPresent()) {
+            customerRepository.deleteById(optionalCustomer.get().getId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
-    public Customer updateCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer updateCustomer(Long id, Customer customer) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer.isPresent()) {
+            customer.setId(optionalCustomer.get().getId());
+            return customerRepository.save(customer); // Save the updated entity
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

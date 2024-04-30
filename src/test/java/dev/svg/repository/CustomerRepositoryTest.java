@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CustomerRepositoryTest {
@@ -58,9 +60,31 @@ class CustomerRepositoryTest {
 
     @Test
     @DisplayName("Should create a new user")
-    void testCreateNewUser() {
+    void testCreateNewCustomer() {
         customerRepository.save(customer);
         assertNotNull(customerRepository.findById(1L));
+    }
+
+    @Test
+    @DisplayName("Should update the customer's email")
+    void testUpdateCustomerEmail() {
+        String expectedEmail = "new@email.dev";
+
+        customer.setEmail(expectedEmail);
+        customerRepository.save(customer);
+
+        assertNotNull(customerRepository.findByEmail("expectedEmail"));
+    }
+
+    @Test
+    @DisplayName("Should delete a customer by idCard")
+    void testDeleteByIdCard() {
+        customerRepository.save(customer);
+        Optional<Customer> optionalCustomer = customerRepository.findByIdCard("12345678A");
+        optionalCustomer.ifPresent(value -> customerRepository.deleteById(value.getId()));
+
+        assertTrue(customerRepository.findByIdCard("12345678A").isEmpty(),
+                "Customer with id card 12345678A should not exist after deletion");
     }
 
     @Test
