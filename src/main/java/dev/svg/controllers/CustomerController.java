@@ -37,12 +37,6 @@ public class CustomerController implements ResourceController <Customer> {
         return customer;
     }
 
-    @DeleteMapping("/customers/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteResource(@PathVariable("id") String id) {
-        customerService.deleteByIdCard(id);
-    }
-
     @PostMapping("/customers")
     @ResponseStatus(HttpStatus.CREATED)
     public Customer createResource(@RequestBody @Valid Customer customer) {
@@ -55,4 +49,15 @@ public class CustomerController implements ResourceController <Customer> {
         return customerService.updateCustomer(idCard, customer);
     }
 
+    @DeleteMapping("/customers/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteResource(@PathVariable("id") String id) {
+        customerService.deleteByIdCard(id);
+    }
+
+    @DeleteMapping("/customers")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAllResources() {
+        customerService.deleteAllCustomers();
+    }
 }

@@ -34,15 +34,6 @@ public class CustomerService {
         return customerRepository.findByPhone(phone);
     }
 
-    public void deleteByIdCard(String idCard) {
-        Optional<Customer> optionalCustomer = customerRepository.findByIdCard(idCard);
-        if (optionalCustomer.isPresent()) {
-            customerRepository.deleteById(optionalCustomer.get().getIdCard());
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }
-
     public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
@@ -57,4 +48,16 @@ public class CustomerService {
         }
     }
 
+    public void deleteByIdCard(String idCard) {
+        Optional<Customer> optionalCustomer = customerRepository.findByIdCard(idCard);
+        if (optionalCustomer.isPresent()) {
+            customerRepository.deleteById(optionalCustomer.get().getIdCard());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public void deleteAllCustomers() {
+        customerRepository.deleteAll();
+    }
 }
