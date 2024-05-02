@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.svg.model.customer.Address;
 import dev.svg.model.customer.Customer;
 import dev.svg.model.customer.Name;
+import dev.svg.repository.CustomerRepository;
 import dev.svg.services.CustomerService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -196,17 +200,19 @@ class CustomerControllerTest {
 
     @Test
     void deleteResource() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(delete("/iron-bank/customers/12345678A"))
+        mockMvc.perform(delete("/iron-bank/customers/12345678A"))
                 .andExpect(status().isOk()).andReturn();
 
-        assertFalse(mvcResult.getResponse().getContentAsString().contains("cule.jordi@gmail.com"));
+        Optional<Customer> customers = customerService.getCustomerByIdCard("12345678A");
+        assertFalse(customers.isPresent());
     }
 
     @Test
     void deleteAllResource() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(delete("/iron-bank/customers"))
+        mockMvc.perform(delete("/iron-bank/customers"))
                 .andExpect(status().isOk()).andReturn();
 
-        assertFalse(mvcResult.getResponse().getContentAsString().contains("cule.jordi@gmail.com"));
+        List<Customer> customers = customerService.getAllCustomers();
+        assertTrue(customers.isEmpty());
     }
 }
