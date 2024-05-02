@@ -1,8 +1,8 @@
 package dev.svg.repository;
 
-import dev.svg.model.Address;
-import dev.svg.model.Customer;
-import dev.svg.model.Name;
+import dev.svg.model.customer.Address;
+import dev.svg.model.customer.Customer;
+import dev.svg.model.customer.Name;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class CustomerRepositoryTest {
@@ -43,13 +44,13 @@ class CustomerRepositoryTest {
         name.setName("Jordi");
         name.setSurname("Culé");
 
-        customer = new Customer(1L,
+        customer = new Customer(
                 "12345678A",
                 name,
                 address,
                 secondaryAddress,
                 "cule.jordi@hotmail.com",
-                "600102030"
+                "600102030", null
         );
     }
 
@@ -81,7 +82,7 @@ class CustomerRepositoryTest {
     void testDeleteByIdCard() {
         customerRepository.save(customer);
         Optional<Customer> optionalCustomer = customerRepository.findByIdCard("12345678A");
-        optionalCustomer.ifPresent(value -> customerRepository.deleteById(value.getId()));
+        optionalCustomer.ifPresent(value -> customerRepository.deleteByIdCard(value.getIdCard()));
 
         assertTrue(customerRepository.findByIdCard("12345678A").isEmpty(),
                 "Customer with id card 12345678A should not exist after deletion");
