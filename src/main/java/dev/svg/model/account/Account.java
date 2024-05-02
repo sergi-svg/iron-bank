@@ -2,7 +2,6 @@ package dev.svg.model.account;
 
 import dev.svg.model.customer.Customer;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "account_type")
 public class Account {
 
@@ -24,10 +23,6 @@ public class Account {
     private String accountNumber;
 
     private double balance;
-
-    @Column(name = "interest_rate")
-    @Min(value = 0, message = "Interest rate must be greater than or equal to 0")
-    private double interestRate;
 
     @ManyToMany
     @JoinTable(name = "customer_account",
