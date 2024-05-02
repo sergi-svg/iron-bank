@@ -52,8 +52,8 @@ public class Customer {
     @ManyToMany
     @JoinTable(
             name = "customer_account",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_id")
+            joinColumns = @JoinColumn(name = "id_card"),
+            inverseJoinColumns = @JoinColumn(name = "account_number")
     )
     private List<Account> accounts;
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -82,6 +83,7 @@ class CustomerRepositoryTest {
     void testDeleteByIdCard() {
         customerRepository.save(customer);
         Optional<Customer> optionalCustomer = customerRepository.findByIdCard("12345678A");
+        List<Customer> customers = customerRepository.findAll();
         optionalCustomer.ifPresent(value -> customerRepository.deleteByIdCard(value.getIdCard()));
 
         assertTrue(customerRepository.findByIdCard("12345678A").isEmpty(),
