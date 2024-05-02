@@ -1,6 +1,6 @@
 package dev.svg.services;
 
-import dev.svg.model.Customer;
+import dev.svg.model.customer.Customer;
 import dev.svg.repository.CustomerRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class CustomerService {
     public void deleteByIdCard(String idCard) {
         Optional<Customer> optionalCustomer = customerRepository.findByIdCard(idCard);
         if (optionalCustomer.isPresent()) {
-            customerRepository.deleteById(optionalCustomer.get().getId());
+            customerRepository.deleteById(optionalCustomer.get().getIdCard());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -47,11 +47,11 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer updateCustomer(Long id, Customer customer) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+    public Customer updateCustomer(String idCard, Customer customer) {
+        Optional<Customer> optionalCustomer = customerRepository.findByIdCard(idCard);
         if (optionalCustomer.isPresent()) {
-            customer.setId(optionalCustomer.get().getId());
-            return customerRepository.save(customer); // Save the updated entity
+            customer.setIdCard(optionalCustomer.get().getIdCard());
+            return customerRepository.save(customer);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

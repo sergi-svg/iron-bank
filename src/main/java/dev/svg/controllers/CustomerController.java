@@ -1,6 +1,6 @@
 package dev.svg.controllers;
 
-import dev.svg.model.Customer;
+import dev.svg.model.customer.Customer;
 import dev.svg.services.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -37,10 +37,10 @@ public class CustomerController implements ResourceController <Customer> {
         return customer;
     }
 
-    @DeleteMapping("/customers/{idCard}")
+    @DeleteMapping("/customers/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteResource(@PathVariable("idCard") String idCard) {
-        customerService.deleteByIdCard(idCard);
+    public void deleteResource(@PathVariable("id") String id) {
+        customerService.deleteByIdCard(id);
     }
 
     @PostMapping("/customers")
@@ -49,11 +49,10 @@ public class CustomerController implements ResourceController <Customer> {
         return customerService.createCustomer(customer);
     }
 
-    @PutMapping("/customers/{id}")
+    @PutMapping("/customers/{idCard}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Customer updateResource(@PathVariable Long id, @RequestBody Customer customer) {
-        return customerService.updateCustomer(id, customer);
+    public Customer updateResource(@PathVariable String idCard, @RequestBody Customer customer) {
+        return customerService.updateCustomer(idCard, customer);
     }
-
 
 }

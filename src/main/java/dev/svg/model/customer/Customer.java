@@ -1,10 +1,13 @@
-package dev.svg.model;
+package dev.svg.model.customer;
 
+import dev.svg.model.account.Account;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,11 +16,7 @@ import lombok.*;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull
-    @Column(name = "id_card", unique = true)
+    @Column(name = "id_card")
     @Size(min = 9, max = 9)
     private String idCard;
 
@@ -37,9 +36,18 @@ public class Customer {
     private Address secondaryAddress;
 
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotNull
+    @Column(unique = true)
     private String phone;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "customer_account",
+            joinColumns = @JoinColumn(name = "id_card"),
+            inverseJoinColumns = @JoinColumn(name = "account_number")
+    )
+    private List<Account> accounts;
 }
