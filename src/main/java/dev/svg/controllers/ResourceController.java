@@ -12,4 +12,5 @@ public interface ResourceController <T> {
     T updateResource(String id, T t);
     T createResource(T t);
     void deleteResource(String id);
+    void deleteAllResources();
 }
