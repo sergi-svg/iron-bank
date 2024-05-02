@@ -43,7 +43,7 @@ public class Customer {
     @Column(unique = true)
     private String phone;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "customer_account",
             joinColumns = @JoinColumn(name = "id_card"),
