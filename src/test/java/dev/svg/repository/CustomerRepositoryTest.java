@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -64,7 +63,7 @@ class CustomerRepositoryTest {
     @DisplayName("Should create a new user")
     void testCreateNewCustomer() {
         customerRepository.save(customer);
-        assertNotNull(customerRepository.findById(1L));
+        assertNotNull(customerRepository.findById("12345678A"));
     }
 
     @Test
@@ -83,8 +82,9 @@ class CustomerRepositoryTest {
     void testDeleteByIdCard() {
         customerRepository.save(customer);
         Optional<Customer> optionalCustomer = customerRepository.findByIdCard("12345678A");
-        List<Customer> customers = customerRepository.findAll();
-        optionalCustomer.ifPresent(value -> customerRepository.deleteByIdCard(value.getIdCard()));
+        if (optionalCustomer.isPresent()) {
+            customerRepository.deleteById("12345678A");
+        }
 
         assertTrue(customerRepository.findByIdCard("12345678A").isEmpty(),
                 "Customer with id card 12345678A should not exist after deletion");

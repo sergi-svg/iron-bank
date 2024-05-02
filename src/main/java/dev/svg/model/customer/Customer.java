@@ -12,12 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(
-        uniqueConstraints = {
-                @UniqueConstraint(name = "uk_customer_email", columnNames = "email"),
-                @UniqueConstraint(name = "uk_customer_phone", columnNames = "phone")
-        }
-)
 @Entity
 public class Customer {
 
@@ -49,7 +43,7 @@ public class Customer {
     @Column(unique = true)
     private String phone;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "customer_account",
             joinColumns = @JoinColumn(name = "id_card"),

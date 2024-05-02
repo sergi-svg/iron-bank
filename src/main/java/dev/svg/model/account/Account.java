@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "account_type")
 public class Account {
 
     @Id
@@ -26,10 +28,6 @@ public class Account {
     @Column(name = "interest_rate")
     @Min(value = 0, message = "Interest rate must be greater than or equal to 0")
     private double interestRate;
-
-    @Column(name = "account_type", columnDefinition = "VARCHAR(10) DEFAULT 'SAVINGS'")
-    @Enumerated
-    private AccountType accountType;
 
     @ManyToMany
     @JoinTable(name = "customer_account",

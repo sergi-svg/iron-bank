@@ -37,7 +37,7 @@ public class CustomerService {
     public void deleteByIdCard(String idCard) {
         Optional<Customer> optionalCustomer = customerRepository.findByIdCard(idCard);
         if (optionalCustomer.isPresent()) {
-            customerRepository.deleteByIdCard(optionalCustomer.get().getIdCard());
+            customerRepository.deleteById(optionalCustomer.get().getIdCard());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

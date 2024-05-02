@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, String> {
 
     Optional<Customer> findByIdCard(String idCard);
     Optional<Customer> findByEmail(String email);
     Optional<Customer> findByPhone(String phone);
-    void deleteByIdCard(String idCard);
+
 }
