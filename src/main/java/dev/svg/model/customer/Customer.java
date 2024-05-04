@@ -1,5 +1,7 @@
 package dev.svg.model.customer;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dev.svg.model.account.Account;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -7,12 +9,16 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "idCard")
 public class Customer {
 
     @Id
@@ -49,5 +55,13 @@ public class Customer {
             joinColumns = @JoinColumn(name = "id_card"),
             inverseJoinColumns = @JoinColumn(name = "account_number")
     )
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
+
+    public void addToAccounts(Account account){
+        if (accounts == null) {
+            accounts = new ArrayList<>();
+        }
+        accounts.add(account);
+    }
+
 }

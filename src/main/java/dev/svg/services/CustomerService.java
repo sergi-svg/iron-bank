@@ -22,6 +22,14 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public List<Customer> getAllCustomersByPostalCode(String postalCode) {
+        return customerRepository.findAllByAddressPostalCode(postalCode);
+    }
+
+    public List<Customer> getAllCustomersByCity(String city) {
+        return customerRepository.findAllByAddressCity(city);
+    }
+
     public Optional<Customer> getCustomerByIdCard(String idCard) {
         return customerRepository.findByIdCard(idCard);
     }

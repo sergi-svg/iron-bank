@@ -1,5 +1,7 @@
 package dev.svg.model.account;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dev.svg.model.customer.Customer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -15,6 +17,9 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "account_type")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "customerAccount")
 public class Account {
 
     @Id

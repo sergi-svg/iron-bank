@@ -16,7 +16,21 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     Optional<Account> findByAccountNumber(String accountNumber);
 
-    List<Account> findAccountsByCustomers(List<Customer> customers);
+    @Query("SELECT DISTINCT a FROM Account a " +
+            "JOIN a.customers c " +
+            "JOIN c.address addr " +
+            "JOIN c.secondaryAddress secAddr " +
+            "WHERE (addr.city = :city OR secAddr.city = :city)")
+    List<Account> findAccountsByCity(String city);
+
+    @Query("SELECT DISTINCT a FROM Account a " +
+            "JOIN a.customers c " +
+            "JOIN c.address addr " +
+            "JOIN c.secondaryAddress secAddr " +
+            "WHERE (addr.postalCode = :postalCode OR secAddr.postalCode = :postalCode)")
+    List<Account> findAccountsByPostalCode(String postalCode);
+
+    List<Account> findAccountsByCustomers(Customer customer);
 
     @Query("SELECT sa FROM Account sa WHERE TYPE(sa) = SavingAccount")
     List<SavingAccount> findAllSavingAccounts();
@@ -24,4 +38,6 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     @Query("SELECT ca FROM Account ca WHERE TYPE(ca) = CheckingAccount")
     List<CheckingAccount> findAllCheckingAccounts();
 
+    @Query("SELECT a FROM Account a WHERE a.balance > :value")
+    List<Account> findAllAccountsHavingBiggerBalanceThanValue(double value);
 }

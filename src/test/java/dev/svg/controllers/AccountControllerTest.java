@@ -1,9 +1,12 @@
 package dev.svg.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.svg.model.account.CheckingAccount;
+import dev.svg.model.account.SavingAccount;
 import dev.svg.model.customer.Address;
 import dev.svg.model.customer.Customer;
 import dev.svg.model.customer.Name;
+import dev.svg.services.AccountService;
 import dev.svg.services.CustomerService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,10 +30,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-class CustomerControllerTest {
+class AccountControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    AccountService accountService;
 
     @Autowired
     CustomerService customerService;
@@ -41,6 +48,7 @@ class CustomerControllerTest {
     static Address secondaryAddress;
     static Name name;
     static Customer customer;
+    static List<Customer> customers = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -71,6 +79,23 @@ class CustomerControllerTest {
                 "600102030", null
         );
         customerService.createCustomer(customer);
+        customers.add(customer);
+
+        CheckingAccount checkingAccount = new CheckingAccount();
+        checkingAccount.setAccountNumber("ES9121000418450200051332");
+        checkingAccount.setBalance(10500);
+        checkingAccount.setInterestRate(1.5);
+
+        checkingAccount.setCustomers(customers);
+        accountService.createAccount(checkingAccount);
+
+        SavingAccount savingAccount = new SavingAccount();
+        savingAccount.setAccountNumber("ES9121000418450200051333");
+        savingAccount.setBalance(20500);
+        savingAccount.setInterestRate(3.5);
+
+        savingAccount.setCustomers(customers);
+        accountService.createAccount(savingAccount);
     }
 
     @AfterEach
@@ -80,55 +105,30 @@ class CustomerControllerTest {
 
     @Test
     void getAllResources() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/customers"))
+        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/accounts"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("12345678A"));
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("600102030"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("ES9121000418450200051332"));
     }
 
     @Test
-    void getResourceByParams_ReturnsCustomerByIdCard() throws Exception {
-        String idCardParam = "12345678A";
-        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/customer")
-                        .param("idCard", idCardParam))
+    void testGetResourceByParams_ReturnsAccountByAccountNumber() throws Exception {
+        String accountNumber = "ES9121000418450200051332";
+        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/account")
+                        .param("accountNumber", accountNumber))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("cule.jordi@hotmail.com"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("10500"));
     }
 
     @Test
-    void getResourceByParams_ReturnsCustomerByEmail() throws Exception {
-        String emailParam = "cule.jordi@hotmail.com";
-        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/customer")
-                        .param("email", emailParam))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
-
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("12345678A"));
-    }
-
-    @Test
-    void getResourceByParams_ReturnsCustomerByPhone() throws Exception {
-        String phoneNumberParam = "600102030";
-        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/customer")
-                        .param("phone", phoneNumberParam))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
-
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("12345678A"));
-    }
-
-    @Test
-    void getResourcesByParam_ReturnsCustomersByCity() throws Exception {
+    void testGetResourcesByParams_ReturnsAccountsByCity() throws Exception {
         String cityParam = "Barcelona";
-        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/customers_by")
+        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/accounts_by")
                         .param("city", cityParam))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -138,40 +138,55 @@ class CustomerControllerTest {
     }
 
     @Test
+    void testGetResourcesByParams_ReturnsAccountsByPostalCode() throws Exception {
+        String postalCodeParam = "08001";
+        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/accounts_by")
+                        .param("postalCode", postalCodeParam))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("12345678A"));
+    }
+
+    @Test
+    void testGetCheckingAccount_ReturnsAllCheckingAccounts() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/accounts/checking"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("10500"));
+    }
+
+    @Test
+    void testGetSavingAccount_ReturnsAllSavingAccounts() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/iron-bank/accounts/saving"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("20500"));
+    }
+
+    @Test
     void createResource() throws Exception {
-        address = new Address();
-        address.setCity("Barcelona");
-        address.setPostalCode("08020");
-        address.setStreet("Gran via c.c");
-        address.setStreetNumber("111");
+        CheckingAccount checkingAccount = new CheckingAccount();
+        checkingAccount.setAccountNumber("ES9121000418450200054321");
+        checkingAccount.setBalance(500);
+        checkingAccount.setInterestRate(1.5);
 
-        secondaryAddress = new Address();
-        secondaryAddress.setCity("Tossa de Mar");
-        secondaryAddress.setPostalCode("17320");
-        secondaryAddress.setStreet("Carrer del mar");
-        secondaryAddress.setStreetNumber("5");
+        checkingAccount.setCustomers(customers);
+        accountService.createAccount(checkingAccount);
 
-        name = new Name();
-        name.setName("Leo");
-        name.setSurname("Messi");
+        String body = objectMapper.writeValueAsString(checkingAccount);
 
-        customer = new Customer(
-                "12345678M",
-                name,
-                address,
-                secondaryAddress,
-                "messi.leo@hotmail.com",
-                "600101010", null
-        );
-
-        String body = objectMapper.writeValueAsString(customer);
-
-        MvcResult mvcResult = mockMvc.perform(post("/iron-bank/customers")
+        MvcResult mvcResult = mockMvc.perform(post("/iron-bank/accounts")
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isCreated()).andReturn();
 
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("messi.leo@hotmail.com"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("ES9121000418450200054321"));
     }
 
     @Test

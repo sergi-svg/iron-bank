@@ -12,8 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CustomerRepositoryTest {
@@ -60,7 +59,7 @@ class CustomerRepositoryTest {
     }
 
     @Test
-    @DisplayName("Should create a new user")
+    @DisplayName("Should create a new customer")
     void testCreateNewCustomer() {
         customerRepository.save(customer);
         assertNotNull(customerRepository.findById("12345678A"));
@@ -91,17 +90,31 @@ class CustomerRepositoryTest {
     }
 
     @Test
-    @DisplayName("Should find a user by email")
+    @DisplayName("Should find a customer by email")
     void testFindByEmail() {
         customerRepository.save(customer);
         assertNotNull(customerRepository.findByEmail("cule.jordi@hotmail.com"));
     }
 
     @Test
-    @DisplayName("Should find a user by phone")
+    @DisplayName("Should find a customer by phone")
     void testFindByPhone() {
         customerRepository.save(customer);
         assertNotNull(customerRepository.findByPhone("600102030"));
+    }
+
+    @Test
+    @DisplayName("Should find all customers from same city")
+    void testFindByAddressCity() {
+        customerRepository.save(customer);
+        assertFalse(customerRepository.findAllByAddressCity("Barcelona").isEmpty());
+    }
+
+    @Test
+    @DisplayName("Should find all customers from same postal code")
+    void testFindByAddressPostalCode() {
+        customerRepository.save(customer);
+        assertFalse(customerRepository.findAllByAddressPostalCode("08001").isEmpty());
     }
 
 }
