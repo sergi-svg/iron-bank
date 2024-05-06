@@ -14,8 +14,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +31,7 @@ class AccountRepositoryTest {
     static Address secondaryAddress;
     static Name name;
     static Customer customer;
-    List<Customer> customerList = new ArrayList<>();
+    Set<Customer> customers = new HashSet<>();
 
     @BeforeEach
     void setUp() {
@@ -75,8 +75,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
 
@@ -91,8 +91,8 @@ class AccountRepositoryTest {
         savingAccount.setBalance(10500);
         savingAccount.setInterestRate(2.5);
 
-        customerList.add(customer);
-        savingAccount.setCustomers(customerList);
+        customers.add(customer);
+        savingAccount.setCustomers(customers);
 
         accountRepository.save(savingAccount);
 
@@ -107,8 +107,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
         assertFalse(accountRepository.findByAccountNumber("ES9121000418450200051332").isEmpty());
@@ -125,8 +125,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
 
@@ -141,8 +141,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
 
@@ -157,8 +157,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
 
@@ -173,12 +173,12 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
 
-        assertFalse(accountRepository.findAccountsByCustomers(customer).isEmpty());
+        assertFalse(accountRepository.findAccountsByCustomers(customers).isEmpty());
     }
 
 
@@ -191,8 +191,8 @@ class AccountRepositoryTest {
         savingAccount.setBalance(10500);
         savingAccount.setInterestRate(2.5);
 
-        customerList.add(customer);
-        savingAccount.setCustomers(customerList);
+        customers.add(customer);
+        savingAccount.setCustomers(customers);
         accountRepository.save(savingAccount);
 
         // Create a checking account
@@ -201,8 +201,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
         accountRepository.save(checkingAccount);
 
         int expectedAccount = 1;
@@ -218,8 +218,8 @@ class AccountRepositoryTest {
         savingAccount.setBalance(10500);
         savingAccount.setInterestRate(2.5);
 
-        customerList.add(customer);
-        savingAccount.setCustomers(customerList);
+        customers.add(customer);
+        savingAccount.setCustomers(customers);
         accountRepository.save(savingAccount);
 
         // Create a checking account
@@ -228,8 +228,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
         accountRepository.save(checkingAccount);
 
         int expectedAccount = 1;
@@ -247,8 +247,8 @@ class AccountRepositoryTest {
         savingAccount.setBalance(10500);
         savingAccount.setInterestRate(2.5);
 
-        customerList.add(customer);
-        savingAccount.setCustomers(customerList);
+        customers.add(customer);
+        savingAccount.setCustomers(customers);
         accountRepository.save(savingAccount);
 
         // Create a checking account
@@ -257,8 +257,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
         accountRepository.save(checkingAccount);
 
         assertFalse(accountRepository.findAllAccountsHavingBiggerBalanceThanValue(values).isEmpty());

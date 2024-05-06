@@ -1,24 +1,21 @@
 package dev.svg.model.customer;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dev.svg.model.account.Account;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "idCard")
 public class Customer {
 
     @Id
@@ -49,6 +46,13 @@ public class Customer {
     @Column(unique = true)
     private String phone;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "customer_account",
+            joinColumns = {@JoinColumn(name = "id_card")},
+            inverseJoinColumns = {@JoinColumn(name = "account_number")})
+    private Set<Account> accounts = new HashSet<>();
+
+    /*
     @ManyToMany
     @JoinTable(
             name = "customer_account",
@@ -63,5 +67,5 @@ public class Customer {
         }
         accounts.add(account);
     }
-
+    */
 }

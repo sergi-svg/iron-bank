@@ -20,9 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -48,7 +46,7 @@ class AccountControllerTest {
     static Address secondaryAddress;
     static Name name;
     static Customer customer;
-    static List<Customer> customers = new ArrayList<>();
+    static Set<Customer> customers = new HashSet<>();
 
     @BeforeEach
     void setUp() {
@@ -100,6 +98,7 @@ class AccountControllerTest {
 
     @AfterEach
     void tearDown() {
+        accountService.deleteAllAccount();
         customerService.deleteAllCustomers();
     }
 
@@ -171,6 +170,20 @@ class AccountControllerTest {
 
     @Test
     void createResource() throws Exception {
+        name = new Name();
+        name.setName("Jordi2");
+        name.setSurname("Culé");
+
+        customer = new Customer(
+                "12345678B",
+                name,
+                address,
+                secondaryAddress,
+                "cule.jordi2@hotmail.com",
+                "600102030", null
+        );
+        customerService.createCustomer(customer);
+
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200054321");
         checkingAccount.setBalance(500);

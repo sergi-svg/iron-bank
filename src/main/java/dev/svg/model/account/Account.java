@@ -9,7 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,9 +18,6 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "account_type")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "customerAccount")
 public class Account {
 
     @Id
@@ -29,10 +27,15 @@ public class Account {
 
     private double balance;
 
+
+    @ManyToMany(mappedBy = "accounts")
+    private Set<Customer> customers = new HashSet<>();
+
+    /*
     @ManyToMany
     @JoinTable(name = "customer_account",
             joinColumns = @JoinColumn(name = "account_number"),
             inverseJoinColumns = @JoinColumn(name = "id_card"))
     private List<Customer> customers;
-
+    */
 }

@@ -7,12 +7,12 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     defer-datasource-initialization: true
   sql:
     init:
-      #data-locations: classpath:data.sql
+      data-locations: classpath:data.sql
       mode: always
 
 spring-doc:
