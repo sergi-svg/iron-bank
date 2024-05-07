@@ -29,5 +29,4 @@ public class Account {
             joinColumns = @JoinColumn(name = "account_number"),
             inverseJoinColumns = @JoinColumn(name = "id_card"))
     private List<Customer> customers;
-
 }

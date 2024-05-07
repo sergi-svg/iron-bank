@@ -7,10 +7,14 @@ import java.util.Optional;
 
 public interface ResourceController <T> {
 
-    Optional<T> getResourceByParams(HashMap<String,String> params);
     List<T> getAllResources();
+    List<T> getResourcesByParam(HashMap<String,String> params);
+
+    Optional<T> getResourceByParams(HashMap<String,String> params);
+
     T updateResource(String id, T t);
     T createResource(T t);
+
     void deleteResource(String id);
     void deleteAllResources();
 }

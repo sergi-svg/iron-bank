@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -29,12 +30,22 @@ public class CustomerController implements ResourceController <Customer> {
     @GetMapping(path = "/customer")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Customer> getResourceByParams(@RequestParam HashMap<String, String> params) {
-        Optional<Customer> customer = null;
+        Optional<Customer> customer = Optional.empty();
         if (params.containsKey("idCard")) customer = customerService.getCustomerByIdCard(params.get("idCard"));
         else if (params.containsKey("email")) customer = customerService.getCustomerByEmail(params.get("email"));
         else if (params.containsKey("phone")) customer = customerService.getCustomerByPhone(params.get("phone"));
 
         return customer;
+    }
+
+    @GetMapping(path = "/customers_by")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Customer> getResourcesByParam(@RequestParam HashMap<String, String> params) {
+        List<Customer> customers = new ArrayList<>();
+        if (params.containsKey("city")) customers = customerService.getAllCustomersByCity(params.get("city"));
+        else if (params.containsKey("postalCode")) customers = customerService.getAllCustomersByPostalCode(params.get("postalCode"));
+
+        return customers;
     }
 
     @PostMapping("/customers")
@@ -43,10 +54,10 @@ public class CustomerController implements ResourceController <Customer> {
         return customerService.createCustomer(customer);
     }
 
-    @PutMapping("/customers/{idCard}")
+    @PutMapping("/customers/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Customer updateResource(@PathVariable String idCard, @RequestBody Customer customer) {
-        return customerService.updateCustomer(idCard, customer);
+    public Customer updateResource(@PathVariable String id, @RequestBody Customer customer) {
+        return customerService.updateCustomer(id, customer);
     }
 
     @DeleteMapping("/customers/{id}")

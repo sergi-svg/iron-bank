@@ -5,8 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -49,5 +52,14 @@ public class Customer {
             joinColumns = @JoinColumn(name = "id_card"),
             inverseJoinColumns = @JoinColumn(name = "account_number")
     )
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
+
+    /*
+    public void addToAccounts(Account account){
+        if (accounts == null) {
+            accounts = new ArrayList<>();
+        }
+        accounts.add(account);
+    }
+    */
 }

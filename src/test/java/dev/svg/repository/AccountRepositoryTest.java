@@ -9,6 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -29,7 +31,7 @@ class AccountRepositoryTest {
     static Address secondaryAddress;
     static Name name;
     static Customer customer;
-    List<Customer> customerList = new ArrayList<>();
+    List<Customer> customers = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -56,11 +58,13 @@ class AccountRepositoryTest {
                 secondaryAddress,
                 "cule.jordi@hotmail.com",
                 "600102030", null);
+
         customerRepository.save(customer);
     }
 
     @AfterEach
     void tearDown() {
+        customerRepository.deleteAll();
         accountRepository.deleteAll();
     }
 
@@ -72,8 +76,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
 
@@ -88,12 +92,30 @@ class AccountRepositoryTest {
         savingAccount.setBalance(10500);
         savingAccount.setInterestRate(2.5);
 
-        customerList.add(customer);
-        savingAccount.setCustomers(customerList);
+        customers.add(customer);
+        savingAccount.setCustomers(customers);
 
         accountRepository.save(savingAccount);
 
         assertNotNull(accountRepository.findByAccountNumber("ES9121000418450200051111"));
+    }
+
+    @Test
+    @DisplayName("Should delete an account by its account number")
+    void testDeleteByAccountNumber() {
+        CheckingAccount checkingAccount = new CheckingAccount();
+        checkingAccount.setAccountNumber("ES9121000418450200051332");
+        checkingAccount.setBalance(10500);
+        checkingAccount.setInterestRate(1.5);
+
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
+
+        accountRepository.save(checkingAccount);
+        assertFalse(accountRepository.findByAccountNumber("ES9121000418450200051332").isEmpty());
+
+        accountRepository.deleteById("ES9121000418450200051332");
+        assertTrue(accountRepository.findByAccountNumber("ES9121000418450200051332").isEmpty());
     }
 
     @Test
@@ -104,12 +126,44 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
 
         assertNotNull(accountRepository.findByAccountNumber("ES9121000418450200051332"));
+    }
+
+    @Test
+    @DisplayName("Should return a list of accounts by city")
+    void testFindAccountsByCity() {
+        CheckingAccount checkingAccount = new CheckingAccount();
+        checkingAccount.setAccountNumber("ES9121000418450200051332");
+        checkingAccount.setBalance(10500);
+        checkingAccount.setInterestRate(1.5);
+
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
+
+        accountRepository.save(checkingAccount);
+
+        assertFalse(accountRepository.findAccountsByCity("Barcelona").isEmpty());
+    }
+
+    @Test
+    @DisplayName("Should return a list of accounts by postalCode")
+    void testFindAccountsByPostalCode() {
+        CheckingAccount checkingAccount = new CheckingAccount();
+        checkingAccount.setAccountNumber("ES9121000418450200051332");
+        checkingAccount.setBalance(10500);
+        checkingAccount.setInterestRate(1.5);
+
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
+
+        accountRepository.save(checkingAccount);
+
+        assertFalse(accountRepository.findAccountsByPostalCode("08001").isEmpty());
     }
 
     @Test
@@ -120,12 +174,12 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
 
         accountRepository.save(checkingAccount);
 
-        assertFalse(accountRepository.findAccountsByCustomers(customerList).isEmpty());
+        assertFalse(accountRepository.findAccountsByCustomers(customers).isEmpty());
     }
 
     @Test
@@ -137,8 +191,8 @@ class AccountRepositoryTest {
         savingAccount.setBalance(10500);
         savingAccount.setInterestRate(2.5);
 
-        customerList.add(customer);
-        savingAccount.setCustomers(customerList);
+        customers.add(customer);
+        savingAccount.setCustomers(customers);
         accountRepository.save(savingAccount);
 
         // Create a checking account
@@ -147,8 +201,8 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
         accountRepository.save(checkingAccount);
 
         int expectedAccount = 1;
@@ -164,8 +218,8 @@ class AccountRepositoryTest {
         savingAccount.setBalance(10500);
         savingAccount.setInterestRate(2.5);
 
-        customerList.add(customer);
-        savingAccount.setCustomers(customerList);
+        customers.add(customer);
+        savingAccount.setCustomers(customers);
         accountRepository.save(savingAccount);
 
         // Create a checking account
@@ -174,30 +228,40 @@ class AccountRepositoryTest {
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
         accountRepository.save(checkingAccount);
 
         int expectedAccount = 1;
         assertEquals(expectedAccount, accountRepository.findAllCheckingAccounts().size());
     }
 
-    @Test
-    @DisplayName("Should delete an account by its account number")
-    void testDeleteByAccountNumber() {
+
+    @ParameterizedTest
+    @DisplayName("Should retrieve all accounts with a balance bigger concrete values")
+    @ValueSource(doubles = {500, 1000, 100})
+    void testFindAllAccountsHavingBiggerBalanceThanValue(double values) {
+        // Create a saving account
+        SavingAccount savingAccount = new SavingAccount();
+        savingAccount.setAccountNumber("ES9121000418450200051111");
+        savingAccount.setBalance(10500);
+        savingAccount.setInterestRate(2.5);
+
+        customers.add(customer);
+        savingAccount.setCustomers(customers);
+        accountRepository.save(savingAccount);
+
+        // Create a checking account
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
         checkingAccount.setBalance(10500);
         checkingAccount.setInterestRate(1.5);
 
-        customerList.add(customer);
-        checkingAccount.setCustomers(customerList);
-
+        customers.add(customer);
+        checkingAccount.setCustomers(customers);
         accountRepository.save(checkingAccount);
-        assertFalse(accountRepository.findByAccountNumber("ES9121000418450200051332").isEmpty());
 
-        accountRepository.deleteById("ES9121000418450200051332");
-        assertTrue(accountRepository.findByAccountNumber("ES9121000418450200051332").isEmpty());
+        assertFalse(accountRepository.findAllAccountsHavingBiggerBalanceThanValue(values).isEmpty());
     }
 
 }
