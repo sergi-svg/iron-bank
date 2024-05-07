@@ -46,7 +46,7 @@ class AccountControllerTest {
     static Address secondaryAddress;
     static Name name;
     static Customer customer;
-    static Set<Customer> customers = new HashSet<>();
+    static List<Customer> customers = new ArrayList<>();
 
     @BeforeEach
     void setUp() {

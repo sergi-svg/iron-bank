@@ -9,8 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,13 +46,6 @@ public class Customer {
     @Column(unique = true)
     private String phone;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "customer_account",
-            joinColumns = {@JoinColumn(name = "id_card")},
-            inverseJoinColumns = {@JoinColumn(name = "account_number")})
-    private Set<Account> accounts = new HashSet<>();
-
-    /*
     @ManyToMany
     @JoinTable(
             name = "customer_account",
@@ -61,6 +54,7 @@ public class Customer {
     )
     private List<Account> accounts = new ArrayList<>();
 
+    /*
     public void addToAccounts(Account account){
         if (accounts == null) {
             accounts = new ArrayList<>();

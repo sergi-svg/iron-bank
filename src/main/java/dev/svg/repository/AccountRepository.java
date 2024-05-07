@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
@@ -31,7 +30,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
             "WHERE (addr.postalCode = :postalCode OR secAddr.postalCode = :postalCode)")
     List<Account> findAccountsByPostalCode(String postalCode);
 
-    List<Account> findAccountsByCustomers(Set<Customer> customers);
+    List<Account> findAccountsByCustomers(List<Customer> customers);
 
     @Query("SELECT sa FROM Account sa WHERE TYPE(sa) = SavingAccount")
     List<SavingAccount> findAllSavingAccounts();

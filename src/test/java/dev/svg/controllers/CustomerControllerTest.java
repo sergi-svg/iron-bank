@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -162,7 +162,7 @@ class CustomerControllerTest {
                 address,
                 secondaryAddress,
                 "messi.leo@hotmail.com",
-                "600101010", new HashSet<>()
+                "600101010", new ArrayList<>()
         );
 
         String body = objectMapper.writeValueAsString(customer);

@@ -14,8 +14,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +31,7 @@ class AccountRepositoryTest {
     static Address secondaryAddress;
     static Name name;
     static Customer customer;
-    Set<Customer> customers = new HashSet<>();
+    List<Customer> customers = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
@@ -64,6 +64,7 @@ class AccountRepositoryTest {
 
     @AfterEach
     void tearDown() {
+        customerRepository.deleteAll();
         accountRepository.deleteAll();
     }
 
@@ -180,7 +181,6 @@ class AccountRepositoryTest {
 
         assertFalse(accountRepository.findAccountsByCustomers(customers).isEmpty());
     }
-
 
     @Test
     @DisplayName("Should retrieve all saving accounts")
