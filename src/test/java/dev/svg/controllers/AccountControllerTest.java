@@ -180,7 +180,7 @@ class AccountControllerTest {
                 address,
                 secondaryAddress,
                 "cule.jordi2@hotmail.com",
-                "600102030", null
+                "600101010", null
         );
         customerService.createCustomer(customer);
 
@@ -190,7 +190,7 @@ class AccountControllerTest {
         checkingAccount.setInterestRate(1.5);
 
         checkingAccount.setCustomers(customers);
-        accountService.createAccount(checkingAccount);
+        //accountService.createAccount(checkingAccount);
 
         String body = objectMapper.writeValueAsString(checkingAccount);
 

@@ -3,7 +3,6 @@ package dev.svg.controllers;
 import dev.svg.model.account.Account;
 import dev.svg.model.account.CheckingAccount;
 import dev.svg.model.account.SavingAccount;
-import dev.svg.model.customer.Customer;
 import dev.svg.services.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -64,13 +63,13 @@ public class AccountController implements ResourceController <Account> {
     @PostMapping("/accounts")
     @ResponseStatus(HttpStatus.CREATED)
     public Account createResource(@RequestBody @Valid Account account) {
-        return null;//accountService.createAccount(account);
+        return accountService.createAccount(account);
     }
 
     @PutMapping("/accounts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Account updateResource(@PathVariable String id, @RequestBody Account account) {
-        return null;//accountService.updateAccount(id, account);
+        return accountService.updateAccount(id, account);
     }
 
     @DeleteMapping("/accounts/{id}")
