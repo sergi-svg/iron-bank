@@ -1,27 +1,25 @@
 package dev.svg.model.customer;
 
 import dev.svg.model.account.Account;
+import dev.svg.security.models.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class Customer {
-
-    @Id
-    @Column(name = "id_card")
-    @Size(min = 9, max = 9)
-    private String idCard;
+public class Customer extends User {
 
     @Embedded
     private Name name;
