@@ -1,11 +1,11 @@
 package dev.svg.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.svg.model.account.CheckingAccount;
-import dev.svg.model.account.SavingAccount;
-import dev.svg.model.customer.Address;
-import dev.svg.model.customer.Customer;
-import dev.svg.model.customer.Name;
+import dev.svg.models.account.CheckingAccount;
+import dev.svg.models.account.SavingAccount;
+import dev.svg.models.customer.Address;
+import dev.svg.models.customer.Customer;
+import dev.svg.models.customer.Name;
 import dev.svg.services.AccountService;
 import dev.svg.services.CustomerService;
 import org.junit.jupiter.api.AfterEach;
@@ -69,6 +69,7 @@ class AccountControllerTest {
         name.setSurname("Culé");
 
         customer = new Customer(
+                "12345678A",
                 "12345678A",
                 name,
                 address,
@@ -176,6 +177,7 @@ class AccountControllerTest {
 
         customer = new Customer(
                 "12345678B",
+                "12345678B",
                 name,
                 address,
                 secondaryAddress,
@@ -221,6 +223,7 @@ class AccountControllerTest {
         name.setSurname("Culé");
 
         customer = new Customer(
+                "12345678A",
                 "12345678A",
                 name,
                 address,

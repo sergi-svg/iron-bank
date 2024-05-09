@@ -1,11 +1,10 @@
-package dev.svg.model.customer;
+package dev.svg.models.customer;
 
-import dev.svg.model.account.Account;
+import dev.svg.models.account.Account;
 import dev.svg.security.models.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -52,12 +51,13 @@ public class Customer extends User {
     )
     private List<Account> accounts = new ArrayList<>();
 
-    /*
-    public void addToAccounts(Account account){
-        if (accounts == null) {
-            accounts = new ArrayList<>();
-        }
-        accounts.add(account);
+    public Customer(String idCard, String password, Name name, Address address, Address secondaryAddress, String mail, String number, List<Account> accounts) {
+        super(idCard, password, null);
+        this.name = name;
+        this.address = address;
+        this.secondaryAddress = secondaryAddress;
+        this.email = mail;
+        this.phone = number;
     }
-    */
+
 }

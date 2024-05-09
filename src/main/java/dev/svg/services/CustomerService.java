@@ -1,6 +1,6 @@
 package dev.svg.services;
 
-import dev.svg.model.customer.Customer;
+import dev.svg.models.customer.Customer;
 import dev.svg.repository.CustomerRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

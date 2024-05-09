@@ -1,9 +1,8 @@
 package dev.svg.services;
 
-import dev.svg.model.account.Account;
-import dev.svg.model.account.CheckingAccount;
-import dev.svg.model.account.SavingAccount;
-import dev.svg.model.customer.Customer;
+import dev.svg.models.account.Account;
+import dev.svg.models.account.CheckingAccount;
+import dev.svg.models.account.SavingAccount;
 import dev.svg.repository.AccountRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

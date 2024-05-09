@@ -1,6 +1,6 @@
 package dev.svg.security.controllers.interfaces;
 
-import com.ironhack.demosecurityjwt.security.models.User;
+import dev.svg.security.models.User;
 
 import java.util.List;
 

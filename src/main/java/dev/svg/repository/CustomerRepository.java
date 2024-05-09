@@ -1,6 +1,6 @@
 package dev.svg.repository;
 
-import dev.svg.model.customer.Customer;
+import dev.svg.models.customer.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -15,6 +15,7 @@ import static jakarta.persistence.FetchType.EAGER;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "customer")
 public class User {
 
     @Id
@@ -27,4 +28,7 @@ public class User {
     @ManyToMany(fetch = EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
+    public String getUsername() {
+        return idCard;
+    }
 }

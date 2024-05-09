@@ -1,6 +1,6 @@
 package dev.svg.controllers;
 
-import dev.svg.model.customer.Customer;
+import dev.svg.models.customer.Customer;
 import dev.svg.services.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

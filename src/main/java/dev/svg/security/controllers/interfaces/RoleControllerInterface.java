@@ -1,7 +1,7 @@
 package dev.svg.security.controllers.interfaces;
 
-import com.ironhack.demosecurityjwt.security.dtos.RoleToUserDTO;
-import com.ironhack.demosecurityjwt.security.models.Role;
+import dev.svg.security.dtos.RoleToUserDTO;
+import dev.svg.security.models.Role;
 
 public interface RoleControllerInterface {
     /**

@@ -1,6 +1,6 @@
-package dev.svg.model.account;
+package dev.svg.models.account;
 
-import dev.svg.model.customer.Customer;
+import dev.svg.models.customer.Customer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

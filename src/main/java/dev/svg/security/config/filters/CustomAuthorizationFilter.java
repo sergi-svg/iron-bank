@@ -26,25 +26,13 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
-/**
- * CustomAuthorizationFilter is an implementation of OncePerRequestFilter to handle
- * authorization of a user to access the API endpoints.
- */
 @Slf4j
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
-    /**
-     * The method doFilterInternal will handle the authorization of a user to access the API endpoints.
-     *
-     * @param request     HttpServletRequest
-     * @param response    HttpServletResponse
-     * @param filterChain FilterChain
-     * @throws ServletException if there is a servlet related error
-     * @throws IOException      if there is an Input/Output error
-     */
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // If the request is for the API Login endpoint, pass the request to the next filter in the chain
-        if (request.getServletPath().equals("/api/login")) {
+        if (request.getServletPath().equals("/login")) {
             filterChain.doFilter(request, response);
         } else {
             // If the request is not for the API Login endpoint, check if the request has the authorization header
