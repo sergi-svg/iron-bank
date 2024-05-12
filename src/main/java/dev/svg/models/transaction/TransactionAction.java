@@ -1,4 +1,4 @@
-package dev.svg.models.transactions;
+package dev.svg.models.transaction;
 
 public enum TransactionAction {
     DEPOSIT, WITHDRAWAL
