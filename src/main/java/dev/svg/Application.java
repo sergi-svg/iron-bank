@@ -28,8 +28,8 @@ public class Application {
     CommandLineRunner run(UserService userService) {
         return args -> {
             if (userService.getUser("adminbank") == null) {
-                userService.saveRole(new Role(null, "ROLE_USER"));
                 userService.saveRole(new Role(null, "ROLE_ADMIN"));
+                userService.saveRole(new Role(null, "ROLE_USER"));
                 userService.saveUser(new User("adminbank",  "1234", new ArrayList<>()));
                 userService.addRoleToUser("adminbank", "ROLE_ADMIN");
             }
