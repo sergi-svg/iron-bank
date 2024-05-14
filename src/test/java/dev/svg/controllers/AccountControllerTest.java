@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -84,7 +85,7 @@ class AccountControllerTest {
 
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         checkingAccount.setCustomers(customers);
@@ -92,7 +93,7 @@ class AccountControllerTest {
 
         SavingAccount savingAccount = new SavingAccount();
         savingAccount.setAccountNumber("ES9121000418450200051333");
-        savingAccount.setBalance(20500);
+        savingAccount.setBalance(new BigDecimal(20500));
         savingAccount.setInterestRate(3.5);
 
         savingAccount.setCustomers(customers);
@@ -190,7 +191,7 @@ class AccountControllerTest {
 
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200054321");
-        checkingAccount.setBalance(500);
+        checkingAccount.setBalance(new BigDecimal(500));
         checkingAccount.setInterestRate(1.5);
 
         checkingAccount.setCustomers(customers);
