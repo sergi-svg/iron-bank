@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class Account {
     @Size(min = 24, max = 24)
     private String accountNumber;
 
-    private double balance;
+    private BigDecimal balance;
 
     @ManyToMany
     @JoinTable(name = "customer_account",

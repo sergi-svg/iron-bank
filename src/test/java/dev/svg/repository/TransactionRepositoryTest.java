@@ -73,14 +73,14 @@ class TransactionRepositoryTest {
 
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051111");
-        checkingAccount.setBalance(1500);
+        checkingAccount.setBalance(new BigDecimal(1500));
         checkingAccount.setInterestRate(1.5);
         checkingAccount.setCustomers(customers);
         accountRepository.save(checkingAccount);
 
         SavingAccount savingAccount = new SavingAccount();
         savingAccount.setAccountNumber("ES9121000418450200052222");
-        savingAccount.setBalance(20500);
+        savingAccount.setBalance(new BigDecimal(20500));
         savingAccount.setInterestRate(2.5);
         savingAccount.setCustomers(customers);
         accountRepository.save(savingAccount);

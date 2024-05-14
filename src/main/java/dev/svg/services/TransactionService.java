@@ -50,7 +50,10 @@ public class TransactionService {
         Optional<Account> optionalAccount = accountRepository.findByAccountNumber(accountNumber);
         if (optionalAccount.isPresent()) {
             transaction.setAccount(optionalAccount.get());
-            return transactionRepository.save(transaction);
+            Transaction savedTransaction = transactionRepository.save(transaction);
+            optionalAccount.get().setBalance(optionalAccount.get().getBalance().add(transaction.getAmount()));
+
+            return savedTransaction;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
         }
