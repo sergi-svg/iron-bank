@@ -33,6 +33,6 @@ public class Transaction {
     private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name = "account_number", referencedColumnName = "account_number")//, insertable = false, updatable = false)
+    @JoinColumn(name = "account_number", referencedColumnName = "account_number", updatable = true)
     private Account account;
 }

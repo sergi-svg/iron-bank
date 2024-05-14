@@ -3,7 +3,9 @@ package dev.svg.controllers;
 import dev.svg.models.account.Account;
 import dev.svg.models.account.CheckingAccount;
 import dev.svg.models.account.SavingAccount;
+import dev.svg.models.transaction.Transaction;
 import dev.svg.services.AccountService;
+import dev.svg.services.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,11 @@ import java.util.Optional;
 public class AccountController implements ResourceController <Account> {
 
     private final AccountService accountService;
+    private final TransactionService transactionService;
 
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, TransactionService transactionService) {
         this.accountService = accountService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping("/accounts")
@@ -78,8 +82,24 @@ public class AccountController implements ResourceController <Account> {
         accountService.deleteByAccountNumber(id);
     }
 
+    @DeleteMapping("/accounts")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllResources() {
-
+        accountService.deleteAllAccount();
     }
+
+    @GetMapping("/accounts/{accountNumber}/transactions")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Transaction> getTransactionsByAccountNumber(@PathVariable String accountNumber) {
+        return transactionService.getTransactionsByAccountNumber(accountNumber);
+    }
+
+
+    @PostMapping("/accounts/{accountNumber}/transactions")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Transaction createTransaction(@PathVariable String accountNumber, @RequestBody @Valid Transaction transaction) {
+        return transactionService.createTransaction(accountNumber, transaction);
+    }
+
+
 }

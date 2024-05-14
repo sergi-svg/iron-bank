@@ -1,5 +1,6 @@
 package dev.svg.repository;
 
+import dev.svg.models.account.Account;
 import dev.svg.models.transaction.Transaction;
 import dev.svg.models.transaction.TransactionAction;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     List<Transaction> findAllByActionAndDateBetween(TransactionAction action, LocalDateTime startDate, LocalDateTime endDate);
 
+    List<Transaction> findAllByAccount(Account account);
 }
