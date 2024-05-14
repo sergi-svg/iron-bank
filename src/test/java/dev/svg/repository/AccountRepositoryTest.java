@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ class AccountRepositoryTest {
     void testCreateNewCheckingAccount() {
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
@@ -90,7 +91,7 @@ class AccountRepositoryTest {
     void testCreateNewSavingAccount() {
         SavingAccount savingAccount = new SavingAccount();
         savingAccount.setAccountNumber("ES9121000418450200051111");
-        savingAccount.setBalance(10500);
+        savingAccount.setBalance(new BigDecimal(10500));
         savingAccount.setInterestRate(2.5);
 
         customers.add(customer);
@@ -106,7 +107,7 @@ class AccountRepositoryTest {
     void testDeleteByAccountNumber() {
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
@@ -124,7 +125,7 @@ class AccountRepositoryTest {
     void testFindByAccountNumber() {
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
@@ -140,7 +141,7 @@ class AccountRepositoryTest {
     void testFindAccountsByCity() {
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
@@ -156,7 +157,7 @@ class AccountRepositoryTest {
     void testFindAccountsByPostalCode() {
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
@@ -172,7 +173,7 @@ class AccountRepositoryTest {
     void testFindAccountsByCustomers() {
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
@@ -189,7 +190,7 @@ class AccountRepositoryTest {
         // Create a saving account
         SavingAccount savingAccount = new SavingAccount();
         savingAccount.setAccountNumber("ES9121000418450200051111");
-        savingAccount.setBalance(10500);
+        savingAccount.setBalance(new BigDecimal(10500));
         savingAccount.setInterestRate(2.5);
 
         customers.add(customer);
@@ -199,7 +200,7 @@ class AccountRepositoryTest {
         // Create a checking account
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
@@ -216,7 +217,7 @@ class AccountRepositoryTest {
         // Create a saving account
         SavingAccount savingAccount = new SavingAccount();
         savingAccount.setAccountNumber("ES9121000418450200051111");
-        savingAccount.setBalance(10500);
+        savingAccount.setBalance(new BigDecimal(10500));
         savingAccount.setInterestRate(2.5);
 
         customers.add(customer);
@@ -226,7 +227,7 @@ class AccountRepositoryTest {
         // Create a checking account
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
@@ -245,7 +246,7 @@ class AccountRepositoryTest {
         // Create a saving account
         SavingAccount savingAccount = new SavingAccount();
         savingAccount.setAccountNumber("ES9121000418450200051111");
-        savingAccount.setBalance(10500);
+        savingAccount.setBalance(new BigDecimal(10500));
         savingAccount.setInterestRate(2.5);
 
         customers.add(customer);
@@ -255,7 +256,7 @@ class AccountRepositoryTest {
         // Create a checking account
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setAccountNumber("ES9121000418450200051332");
-        checkingAccount.setBalance(10500);
+        checkingAccount.setBalance(new BigDecimal(10500));
         checkingAccount.setInterestRate(1.5);
 
         customers.add(customer);
