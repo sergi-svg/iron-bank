@@ -1,5 +1,6 @@
 package dev.svg.models.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.svg.models.account.Account;
 import dev.svg.security.models.User;
 import jakarta.persistence.*;
@@ -43,6 +44,7 @@ public class Customer extends User {
     @Column(unique = true)
     private String phone;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "customer_account",
@@ -51,7 +53,7 @@ public class Customer extends User {
     )
     private List<Account> accounts = new ArrayList<>();
 
-    public Customer(String idCard, String password, Name name, Address address, Address secondaryAddress, String mail, String number, List<Account> accounts) {
+    public Customer(String idCard, String password, Name name, Address address, Address secondaryAddress, String mail, String number) {
         super(idCard, password, null);
         this.name = name;
         this.address = address;

@@ -75,7 +75,7 @@ class AccountControllerTest {
                 address,
                 secondaryAddress,
                 "cule.jordi@hotmail.com",
-                "600102030", null
+                "600102030"
         );
         customerService.createCustomer(customer);
         customers.add(customer);
@@ -127,14 +127,14 @@ class AccountControllerTest {
 
     @Test
     void testGetResourcesByParams_ReturnsAccountsByCity() throws Exception {
-        String cityParam = "Barcelona";
+        final String cityParam = "Barcelona";
         MvcResult mvcResult = mockMvc.perform(get("/iron-bank/accounts_by")
                         .param("city", cityParam))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        assertTrue(mvcResult.getResponse().getContentAsString().contains("08001"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains(cityParam));
     }
 
     @Test
@@ -182,7 +182,7 @@ class AccountControllerTest {
                 address,
                 secondaryAddress,
                 "cule.jordi2@hotmail.com",
-                "600101010", null
+                "600101010"
         );
         customerService.createCustomer(customer);
 
@@ -229,7 +229,7 @@ class AccountControllerTest {
                 address,
                 secondaryAddress,
                 "cule.jordi@gmail.com",
-                "600102030", null
+                "600102030"
         );
 
         String body = objectMapper.writeValueAsString(customer);

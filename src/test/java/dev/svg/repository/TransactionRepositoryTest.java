@@ -66,7 +66,7 @@ class TransactionRepositoryTest {
                 address,
                 secondaryAddress,
                 "cule.jordi@hotmail.com",
-                "600102030", null);
+                "600102030");
 
         customerRepository.save(customer);
         customers.add(customer);
