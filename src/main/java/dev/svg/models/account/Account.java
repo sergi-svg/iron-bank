@@ -1,6 +1,6 @@
-package dev.svg.model.account;
+package dev.svg.models.account;
 
-import dev.svg.model.customer.Customer;
+import dev.svg.models.customer.Customer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -29,4 +29,5 @@ public class Account {
             joinColumns = @JoinColumn(name = "account_number"),
             inverseJoinColumns = @JoinColumn(name = "id_card"))
     private List<Customer> customers;
+
 }

@@ -1,13 +1,14 @@
 package dev.svg.repository;
 
-import dev.svg.model.account.Account;
-import dev.svg.model.account.CheckingAccount;
-import dev.svg.model.account.SavingAccount;
-import dev.svg.model.customer.Customer;
+import dev.svg.models.account.Account;
+import dev.svg.models.account.CheckingAccount;
+import dev.svg.models.account.SavingAccount;
+import dev.svg.models.customer.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
             "WHERE (addr.postalCode = :postalCode OR secAddr.postalCode = :postalCode)")
     List<Account> findAccountsByPostalCode(String postalCode);
 
-    List<Account> findAccountsByCustomers(List<Customer> customers);
+    List<Account> findAccountsByCustomersIn(Collection<Customer> customers);
 
     @Query("SELECT sa FROM Account sa WHERE TYPE(sa) = SavingAccount")
     List<SavingAccount> findAllSavingAccounts();

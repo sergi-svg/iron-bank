@@ -1,8 +1,8 @@
 package dev.svg.repository;
 
-import dev.svg.model.customer.Address;
-import dev.svg.model.customer.Customer;
-import dev.svg.model.customer.Name;
+import dev.svg.models.customer.Address;
+import dev.svg.models.customer.Customer;
+import dev.svg.models.customer.Name;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,11 +46,12 @@ class CustomerRepositoryTest {
 
         customer = new Customer(
                 "12345678A",
+                "12345678A",
                 name,
                 address,
                 secondaryAddress,
                 "cule.jordi@hotmail.com",
-                "600102030", null
+                "600102030", new ArrayList<>()
         );
     }
 

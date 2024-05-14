@@ -1,4 +1,4 @@
-package dev.svg.model.account;
+package dev.svg.models.account;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;

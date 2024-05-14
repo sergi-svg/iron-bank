@@ -1,8 +1,8 @@
 package dev.svg.controllers;
 
-import dev.svg.model.account.Account;
-import dev.svg.model.account.CheckingAccount;
-import dev.svg.model.account.SavingAccount;
+import dev.svg.models.account.Account;
+import dev.svg.models.account.CheckingAccount;
+import dev.svg.models.account.SavingAccount;
 import dev.svg.services.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

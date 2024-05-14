@@ -1,27 +1,24 @@
-package dev.svg.model.customer;
+package dev.svg.models.customer;
 
-import dev.svg.model.account.Account;
+import dev.svg.models.account.Account;
+import dev.svg.security.models.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class Customer {
-
-    @Id
-    @Column(name = "id_card")
-    @Size(min = 9, max = 9)
-    private String idCard;
+public class Customer extends User {
 
     @Embedded
     private Name name;
@@ -54,12 +51,13 @@ public class Customer {
     )
     private List<Account> accounts = new ArrayList<>();
 
-    /*
-    public void addToAccounts(Account account){
-        if (accounts == null) {
-            accounts = new ArrayList<>();
-        }
-        accounts.add(account);
+    public Customer(String idCard, String password, Name name, Address address, Address secondaryAddress, String mail, String number, List<Account> accounts) {
+        super(idCard, password, null);
+        this.name = name;
+        this.address = address;
+        this.secondaryAddress = secondaryAddress;
+        this.email = mail;
+        this.phone = number;
     }
-    */
+
 }

@@ -1,4 +1,4 @@
-package dev.svg.model.customer;
+package dev.svg.models.customer;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotEmpty;

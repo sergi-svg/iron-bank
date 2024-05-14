@@ -1,10 +1,10 @@
 package dev.svg.repository;
 
-import dev.svg.model.account.CheckingAccount;
-import dev.svg.model.account.SavingAccount;
-import dev.svg.model.customer.Address;
-import dev.svg.model.customer.Customer;
-import dev.svg.model.customer.Name;
+import dev.svg.models.account.CheckingAccount;
+import dev.svg.models.account.SavingAccount;
+import dev.svg.models.customer.Address;
+import dev.svg.models.customer.Customer;
+import dev.svg.models.customer.Name;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,6 +52,7 @@ class AccountRepositoryTest {
         name.setSurname("Culé");
 
         customer = new Customer(
+                "12345678A",
                 "12345678A",
                 name,
                 address,
@@ -179,7 +180,7 @@ class AccountRepositoryTest {
 
         accountRepository.save(checkingAccount);
 
-        assertFalse(accountRepository.findAccountsByCustomers(customers).isEmpty());
+        assertFalse(accountRepository.findAccountsByCustomersIn(customers).isEmpty());
     }
 
     @Test
