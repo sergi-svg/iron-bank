@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class CheckingAccount extends Account {
 
     @Column(name = "interest_rate")
-    @Min(value = 0, message = "Interest rate must be greater than or equal to 0")
+    @Min(value = 0, message = "Interest rate must be smaller than or equal to 2")
     private double interestRate;
 
 }

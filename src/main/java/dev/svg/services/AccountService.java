@@ -47,7 +47,6 @@ public class AccountService {
     }
 
     public Account createAccount(Account account) {
-        //account.getCustomers().forEach(c -> c.addToAccounts(account));
         return accountRepository.save(account);
     }
 
