@@ -58,7 +58,7 @@ class AccountRepositoryTest {
                 address,
                 secondaryAddress,
                 "cule.jordi@hotmail.com",
-                "600102030", null);
+                "600102030");
 
         customerRepository.save(customer);
     }

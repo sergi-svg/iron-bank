@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +50,7 @@ class CustomerRepositoryTest {
                 address,
                 secondaryAddress,
                 "cule.jordi@hotmail.com",
-                "600102030", new ArrayList<>()
+                "600102030"
         );
     }
 

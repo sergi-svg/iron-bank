@@ -1,14 +1,15 @@
 # IronBank
 
 This project simulates a simple banking application that allows users to create accounts, deposit and withdraw money, and transfer money between accounts.  
-The goal of this project is to demonstrate the use of following libraries, tools and databases
+
+#### The goal of this project is to demonstrate the use of following libraries, tools and databases
 
 * Spring Boot
 * Spring Boot Test
 * Spring Data JPA 
 * Spring Security
-* Spring Validation
 * Spring Rest
+* Validators
 * MySQL
 * Mockito
 * GitHub Actions
