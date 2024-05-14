@@ -37,23 +37,22 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactionsByAccountNumber(String accountNumber) {
-        Account account = accountRepository.findByAccountNumber(accountNumber).get();
-        if (accountRepository.findByAccountNumber(accountNumber).isPresent()) {
-            return transactionRepository.findAllByAccount(account);
+        Optional<Account> optionalAccount = accountRepository.findByAccountNumber(accountNumber);
+        if (optionalAccount.isPresent()) {
+            return transactionRepository.findAllByAccount(optionalAccount.get());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
         }
-
     }
 
     public Transaction createTransaction(String accountNumber, Transaction transaction) {
         Optional<Account> optionalAccount = accountRepository.findByAccountNumber(accountNumber);
         if (optionalAccount.isPresent()) {
             transaction.setAccount(optionalAccount.get());
-            Transaction savedTransaction = transactionRepository.save(transaction);
+            transaction.setDate(LocalDateTime.now());
             optionalAccount.get().setBalance(optionalAccount.get().getBalance().add(transaction.getAmount()));
-
-            return savedTransaction;
+            accountRepository.save(optionalAccount.get());
+            return transactionRepository.save(transaction);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
         }
